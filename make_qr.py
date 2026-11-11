@@ -3,7 +3,7 @@
 usage: python3 make_qr.py [url] [outfile]
 """
 import sys, os
-sys.path.insert(0, "/tmp/pylibs")
+sys.path.insert(0, "/tmp/qrlib")
 
 import qrcode
 from qrcode.image.styledpil import StyledPilImage
@@ -61,9 +61,13 @@ u = URL.replace("https://", "").rstrip("/")
 uw = d.textlength(u, font=f_url)
 d.text(((W - uw) / 2, y + size + 90), u, font=f_url, fill=INK)
 
-hint = "SCAN TO OPEN · 扫描打开"
+hint = "SCAN TO OPEN"
+hint_jp = "扫描打开"
 hw = d.textlength(hint, font=f_small)
-d.text(((W - hw) / 2, y + size + 165), hint, font=f_small, fill=MUTED)
+hx = (W - hw) / 2
+d.text((hx, y + size + 160), hint, font=f_small, fill=MUTED)
+f_cjk = font("/System/Library/Fonts/Supplemental/Arial Unicode.ttf", 26)
+d.text((hx + hw + 16, y + size + 160), hint_jp, font=f_cjk, fill=MUTED)
 
 CARD.save(OUT, quality=95)
 print("saved", OUT, CARD.size)
